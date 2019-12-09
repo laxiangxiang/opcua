@@ -1,12 +1,23 @@
-  listenerPath: com.example.demo.listener.
-  nodesParser: com.example.demo.parser.MyParser
+  listenerPath: com.opc.uaclient.listener.
+  nodesParser: com.opc.uaclient.parser.MyParser
   publishingRate: 100
   retry:
     connBackOffPeriod: 10000
     maxAttempts: 3
     backOffPeriod: 1000
   plcList:
-    - address: opc.tcp://FJY:53530/OPCUA/SimulationServer
+    - address: opc.tcp://10.28.213.213:4840
+      ns: 3
+      plcNo: 1
+      username:
+      password:
+      isConnect: true
+      isSubscribe: true
+      wareHouseSidePalletRfid: NodeBase# "OPCUA"
+        - SubsribeNode# "1_PalletCode"
+      transferRfid: NodeBase# "OffLineData"
+        - SubsribeNode# "22_Data"
+    - address: opc.tcp://shdq-thinkpad:53530/OPCUA/SimulationServer
       ns: 5
       plcNo: 2
       username:
@@ -15,24 +26,3 @@
       isSubscribe: true
       Test: counter,random
       Test2: counter2
-#    - address: opc.tcp://10.28.213.211:4840
-##      plc编号，从0开始
-#      plcNo: 0
-#      username:
-#      password:
-#      isConnect: true
-#      isSubscribe: true
-##      监听器与监听节点配置格式：
-##      监听器名称：监听节点
-#      device01AndTo04Data: NodeBase# "opcua read"
-#        - SubsribeNode# "read_data_1","read_data_2","read_data_3","read_data_4"
-#    - address: opc.tcp://10.28.213.213:4840
-#      plcNo: 1
-#      username:
-#      password:
-#      isConnect: true
-#      isSubscribe: true
-#      wareHouseSidePalletRfid: NodeBase# "OPCUA"
-#        - SubsribeNode# "1_PalletCode"
-#      transferRfid: NodeBase# "OffLineData"
-#        - SubsribeNode# "22_Data"
