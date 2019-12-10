@@ -36,7 +36,8 @@
 │  │  │              │  │      DefaultUaClientListener.java
 │  │  │              │  │      ListenerBinder.java  客户端监听器和订阅节点绑定器
 │  │  │              │  │      NodesParser.java  订阅节点解析器接口，自己实现的节点解析器需要实现次接口
-│  │  │              │  │      OpcUaConfiguration.java  配置入口类，只要加载了此类就会自动读取配置文件，解析，绑定，连接，订阅
+│  │  │              │  │      OpcUaConfiguration1.java  配置入口类1，已经使用@Configuration注解配置好，不需要额外配置了，只要加载了此类就会自动读取配置文件，解析，绑定，连接，订阅
+│  │  │              │  │      OpcUaConfiguration2.java  配置入口类2，没有使用spring注解配置，需要把这个配置类配置到spring容器中。功能同上。
 │  │  │              │  │      OpcUaProperties.java  properties对象，对应opcua.yml配置文件
 │  │  │              │  │      OpcUaTemplate.java  客户端操作模板，提供读，写，订阅方法
 │  │  │              │  │      Subscriber.java   节点订阅器，将对应客户端的订阅节点和监听器设置到客户端对象中
@@ -121,13 +122,11 @@
 
 >提供符合上述文件格式并且文件名为opcu.yml文件，且文件路径在src根目录上，或者在resources根目录下。
 
-* spring boot项目
+* spring、spring boot项目
   
-> spring boot项目在引入依赖后不需要额外配置，仅仅编写opcua.yml配置文件，监听器和自己定制的节点解析器。
-
-* spring 项目
-
->spring项目需要使用以下方式加载。也需要编写opcua.yml配置文件，监听器和自己定制的节点解析器。
+> 1.如果要使用配置入口类1，不需要额外配置，应为该类已经使用@Configuration注解配置了。
+> 2.如果使用配置入口类2，需要额外把此类在spring容器中注册为一个bean。
+> 3.编写opcua.yml配置文件，配置监听器和自己定制的节点解析器。
 
 ```java
 ApplicationContext context = new AnnotationConfigApplicationContext(OpcUaConfiguration.class);
