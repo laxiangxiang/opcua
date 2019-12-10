@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="00037dfe-123b-4d81-a29d-06d9297056c2" name="Default Changelist" comment="">
+    <list default="true" id="00037dfe-123b-4d81-a29d-06d9297056c2" name="Default Changelist" comment="跟新readme文件。">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/opcua.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +54,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../uaclient(use package)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
@@ -194,7 +192,8 @@
       <workItem from="1575878949010" duration="1177000" />
       <workItem from="1575937963437" duration="2796000" />
       <workItem from="1575942364478" duration="1000" />
-      <workItem from="1575942381156" duration="4011000" />
+      <workItem from="1575942381156" duration="4120000" />
+      <workItem from="1575948610155" duration="909000" />
     </task>
     <task id="LOCAL-00001" summary="commit changes">
       <created>1575869914611</created>
@@ -210,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575942284930</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="跟新readme文件。">
+      <created>1575948507211</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1575948507211</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,17 +248,22 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="commit changes" />
     <MESSAGE value="增加配置入口类2，不使用@Configuration，使用时需要额外注册为spring bean。" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加配置入口类2，不使用@Configuration，使用时需要额外注册为spring bean。" />
+    <MESSAGE value="跟新readme文件。" />
+    <option name="LAST_COMMIT_MESSAGE" value="跟新readme文件。" />
   </component>
   <component name="WindowStateProjectService">
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1575865597936">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.834@0.0.1536.834" timestamp="1575865597936" />
-    <state x="442" y="5" key="CommitChangelistDialog2" timestamp="1575942284275">
+    <state x="442" y="5" key="CommitChangelistDialog2" timestamp="1575949527650">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="442" y="5" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1575942284275" />
+    <state x="442" y="5" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1575949527650" />
+    <state x="549" y="172" key="FileChooserDialogImpl" timestamp="1575948618497">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="549" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1575948618497" />
     <state width="1340" height="464" key="GridCell.Tab.0.bottom" timestamp="1575942353554">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -285,10 +296,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1340" height="464" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1575942353554" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1575942286333">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1575948508421">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1575942286333" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1575948508421" />
     <state x="562" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1575948443992">
       <screen x="0" y="0" width="1536" height="834" />
     </state>

@@ -154,19 +154,15 @@ maven项目：
 
 * spring、spring boot项目
   
-> 1.如果要使用配置入口类1，不需要额外配置，应为该类已经使用@Configuration注解配置了。
-> 2.如果使用配置入口类2，需要额外把此类在spring容器中注册为一个bean。
-> 3.编写opcua.yml配置文件，配置监听器和自己定制的节点解析器。
+> 1.如果要使用配置入口类1，不需要额外配置，应为该类已经使用@Configuration注解配置了。  
+> 2.如果使用配置入口类2，需要额外把此类在spring容器中注册为一个bean。  
+> 3.编写opcua.yml配置文件，配置监听器和自己定制的节点解析器。  
 
 *打包好的jar中的入口类是没有使用spring注解的，使用时如上2步骤配置即可。*
 
-```java
-ApplicationContext context = new AnnotationConfigApplicationContext(OpcUaConfiguration.class);
-```
-
 ### 4.2编写监听器
 
->监听器类名称应为配置文件配置的```监听器名称+Listener```，注意类首字母需大写，配置文件中可以不用首字母大写。并且将监听器类放置在配置文件中```listenerPath```配置的路径下。最重要的一点所有的监听器类都要实现```MonitoredDataItemListener```接口，并实先```onDataChange```方法，在此方法中可以获取对应节点名称，节点的旧值，新值，实现自己的逻辑。
+>监听器类名称应为配置文件配置的```监听器名称+Listener```，注意类首字母需大写，配置文件中可以不用首字母大写。并且将监听器类放置在配置文件中```listenerPath```配置的路径下。最重要的一点所有的监听器类都要实现```MonitoredDataItemListener```接口，并实现```onDataChange```方法，在此方法中可以获取对应节点名称，节点的旧值，新值，实现自己的逻辑。
 
 ### 4.3自定义节点解析器
 
