@@ -7,8 +7,8 @@
 
 ## 2 打包后的jar文件下载
 
-    [制作好的依赖jar下载](www.baidu.com)
-    或者你也可以下载本项目，把com.opc.uaclient.opcua包下的所有文件都放入到自己的项目中。
+shdq.uaclient-1.0.jar [下载](https://pan.baidu.com/s/1NXEpyI7QvAz6XA8mVX7KGA)
+提取码: n92u
 
 ## 3 目录结构及说明
 
@@ -118,6 +118,36 @@
 
 ### 4.1配置
 
+* 引入依赖
+  
+> 1.使用下载好的jar
+
+```java
+maven项目：
+
+  把jar放在lib目录下，在pom文件中引入依赖:
+
+    <dependency>
+      <groupId>org.shdq</groupId>
+      <artifactId>shdq.uaclient</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/shdq.uaclient-1.0.jar</systemPath>
+    </dependency>
+
+  或者把jar包安装到maven本地仓库，再引入依赖：
+  
+  mvn install:install-file -DgroupId=org.shdq -DartifactId=shdq.uaclient -Dversion=1.0 -Dpackaging=jar -Dfile=shdq.uaclient-1.0.jar
+
+  <dependency>
+    <groupId>org.shdq</groupId>
+    <artifactId>shdq.uaclient</artifactId>
+    <version>1.0</version>
+  </dependency>
+```
+
+> 2.你也可以下载本项目，把com.opc.uaclient.opcua包下的所有文件都放入到自己的项目中。
+
 * 配置文件
 
 >提供符合上述文件格式并且文件名为opcu.yml文件，且文件路径在src根目录上，或者在resources根目录下。
@@ -127,6 +157,8 @@
 > 1.如果要使用配置入口类1，不需要额外配置，应为该类已经使用@Configuration注解配置了。
 > 2.如果使用配置入口类2，需要额外把此类在spring容器中注册为一个bean。
 > 3.编写opcua.yml配置文件，配置监听器和自己定制的节点解析器。
+
+*打包好的jar中的入口类是没有使用spring注解的，使用时如上2步骤配置即可。*
 
 ```java
 ApplicationContext context = new AnnotationConfigApplicationContext(OpcUaConfiguration.class);
