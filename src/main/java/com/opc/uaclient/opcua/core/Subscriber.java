@@ -30,9 +30,6 @@ public class Subscriber {
 
     /**
      * 通过连接器获取当前连接器（客户端对象）所需订阅节点列表和所有监听器
-     * 进行对方法进行优化,
-     * 可以同时一个集合(List),注册一个监听类,
-     * 同时也可以一个节点合(String),注册一个监听类
      * @param connector
      */
     protected boolean subscribe(Connector connector) {
@@ -76,6 +73,12 @@ public class Subscriber {
         }
     }
 
+    /**
+     * 先连接，再给客户端设置监听和订阅节点
+     * 和上一个方法一样
+     * @param connector
+     * @return
+     */
     protected boolean connectAndSubscribe(Connector connector){
         try {
             UaClientPOJO uaClientPOJO = connector.getUaClientPOJO();

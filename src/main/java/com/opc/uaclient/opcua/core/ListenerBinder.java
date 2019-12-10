@@ -17,7 +17,7 @@ import java.util.*;
 @Slf4j
 public class ListenerBinder {
 
-    private static List<String> notListenerNames = Arrays.asList("address","username","password","isConnect","isSubscribe","plcNo","ns");
+    private static List<String> notListenerNames = Arrays.asList("address","username","password","isConnect","isSubscribe","plcNo","ns","securityMode","userAuthenticationMode","sessionTimeOut");
 
     private static Relation relation = Relation.getInstance();
 

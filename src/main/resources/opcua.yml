@@ -6,22 +6,26 @@
     maxAttempts: 3
     backOffPeriod: 1000
   plcList:
-    - address: opc.tcp://10.28.213.213:4840
-      ns: 3
-      plcNo: 1
-      username:
-      password:
-      isConnect: true
-      isSubscribe: true
-      wareHouseSidePalletRfid: NodeBase# "OPCUA"
-        - SubsribeNode# "1_PalletCode"
-      transferRfid: NodeBase# "OffLineData"
-        - SubsribeNode# "22_Data"
+#    - address: opc.tcp://10.28.213.213:4840
+#      ns: 3
+#      plcNo: 1
+#      username:
+#      password:
+#      isConnect: true
+#      isSubscribe: true
+#      wareHouseSidePalletRfid: NodeBase# "OPCUA"
+#        - SubsribeNode# "1_PalletCode"
+#      transferRfid: NodeBase# "OffLineData"
+#        - SubsribeNode# "22_Data"
     - address: opc.tcp://shdq-thinkpad:53530/OPCUA/SimulationServer
       ns: 5
       plcNo: 2
-      username:
-      password:
+      securityMode: none
+      userAuthenticationMode: username
+      username: shdq
+      password: 123456
+#      会话过期时间，单位天
+      sessionTimeOut: 1
       isConnect: true
       isSubscribe: true
       Test: counter,random
