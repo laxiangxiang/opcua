@@ -1,0 +1,63 @@
+windows生成目录树命令：tree /f> list.txt
+文件夹 PATH 列表
+卷序列号为 A2C4-AAD9
+C:.
+├─lib
+│      com.prosysopc.ua-2.2.0.jar	连接opc UA服务依赖包
+│      org.opcfoundation.ua-1.2.337.jar
+│      
+├─src
+│  ├─main
+│  │  ├─java
+│  │  │  └─com
+│  │  │      └─opc
+│  │  │          └─uaclient
+│  │  │              │  DemoApplication.java
+│  │  │              │  
+│  │  │              ├─listener 	所有的监听器
+│  │  │              │      Test2Listener.java
+│  │  │              │      TestListener.java
+│  │  │              │      TransferRfidListener.java
+│  │  │              │      WareHouseSidePalletRfidListener.java
+│  │  │              │      
+│  │  │              ├─opcua
+│  │  │              │  ├─core
+│  │  │              │  │      ClientCreator.java		客户端创建器
+│  │  │              │  │      Connector.java			客户端连接器
+│  │  │              │  │      DefaultNodesParser.java		默认节点解析器
+│  │  │              │  │      DefaultUaClientListener.java	
+│  │  │              │  │      ListenerBinder.java		客户端监听器和订阅节点绑定器
+│  │  │              │  │      NodesParser.java		订阅节点解析器接口，自己实现的节点解析器需要实现次接口
+│  │  │              │  │      OpcUaConfiguration.java		配置入口类，只要加载了此类就会自动读取配置文件，解析，绑定，连接，订阅
+│  │  │              │  │      OpcUaProperties.java		properties对象，对应opcua.yml配置文件
+│  │  │              │  │      OpcUaTemplate.java		客户端操作模板，提供读，写，订阅方法
+│  │  │              │  │      Subscriber.java			节点订阅器，将对应客户端的订阅节点和监听器设置到客户端对象中
+│  │  │              │  │      
+│  │  │              │  ├─exception
+│  │  │              │  │      OpcUaClientException.java
+│  │  │              │  │      
+│  │  │              │  ├─pojo
+│  │  │              │  │      ListenerPOJO.java		客户端，监听器，订阅节点关系对象
+│  │  │              │  │      Relation.java			保存ListenerPOJO集合对象以及UaClientPOJO集合对象，使用单例模式
+│  │  │              │  │      UaClientPOJO.java		客户端及其基本属性关系对象
+│  │  │              │  │      
+│  │  │              │  └─util
+│  │  │              │          OpcUaUtil.java			工具类
+│  │  │              │          YamlConverter.java		将yaml配置文件转换成propetites对象
+│  │  │              │          YamlReader.java			
+│  │  │              │          
+│  │  │              ├─parser
+│  │  │              │      MyParser.java			自定义解析器
+│  │  │              │      
+│  │  │              └─web
+│  │  │                  └─controller
+│  │  │                          OpcUaController.java		测试读写的controller
+│  │  │                          
+│  │  └─resources
+│  │          application.properties
+│  │          opcua.yml				opcua yaml配置文件
+│  │          
+│  └─test
+│                          
+└─target
+                        
