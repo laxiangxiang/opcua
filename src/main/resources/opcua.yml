@@ -21,9 +21,12 @@
       ns: 5
       plcNo: 2
       securityMode: none
-      userAuthenticationMode: username
+      userAuthenticationMode: certificate
       username: shdq
       password: 123456
+      certificateFileOrURL:
+      privateKeyFileOrURL:
+      privateKeyPassword:
 #      会话过期时间，单位天
       sessionTimeOut: 1
       isConnect: true

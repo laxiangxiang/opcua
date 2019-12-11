@@ -39,7 +39,7 @@ public class OpcUaConfiguration2 {
      * 在构造器中读取配置文件，创建opcUaClientFactory
      */
     @PostConstruct
-    public void InitOpcUaConfiguration() {
+    public void InitOpcUaConfiguration() throws Exception{
         try {
             properties = convertYAML2Properties();
             retryTemplate = createRetryTemplate();
@@ -71,7 +71,7 @@ public class OpcUaConfiguration2 {
      * 配置文件建议放在src目录下（resources下）
      * @return
      */
-    public OpcUaProperties convertYAML2Properties(){
+    public OpcUaProperties convertYAML2Properties() throws Exception{
         OpcUaProperties properties =  YamlConverter.getInstance().readAndConvert("opcua.yml",OpcUaProperties.class);
         List<Map<String, String>>  plcList= properties.getPlcList();
         for (Map<String, String> plc : plcList) {

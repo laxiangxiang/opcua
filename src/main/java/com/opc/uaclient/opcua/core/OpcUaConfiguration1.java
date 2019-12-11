@@ -70,7 +70,7 @@ public class OpcUaConfiguration1 {
      * @return
      */
     @Bean
-    public OpcUaProperties convertYAML2Properties(){
+    public OpcUaProperties convertYAML2Properties() throws Exception{
         OpcUaProperties properties =  YamlConverter.getInstance().readAndConvert("opcua.yml",OpcUaProperties.class);
         List<Map<String, String>>  plcList= properties.getPlcList();
         for (Map<String, String> plc : plcList) {

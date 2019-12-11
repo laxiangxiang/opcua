@@ -35,6 +35,7 @@ shdq.uaclient-1.0.jar [下载](https://pan.baidu.com/s/1NXEpyI7QvAz6XA8mVX7KGA)
 │  │  │              │  │      DefaultNodesParser.java  默认节点解析器
 │  │  │              │  │      DefaultUaClientListener.java
 │  │  │              │  │      ListenerBinder.java  客户端监听器和订阅节点绑定器
+│  │  │              │  │      Mode.java  
 │  │  │              │  │      NodesParser.java  订阅节点解析器接口，自己实现的节点解析器需要实现次接口
 │  │  │              │  │      OpcUaConfiguration1.java  配置入口类1，已经使用@Configuration注解配置好，不需要额外配置了，只要加载了此类就会自动读取配置文件，解析，绑定，连接，订阅
 │  │  │              │  │      OpcUaConfiguration2.java  配置入口类2，没有使用spring注解配置，需要把这个配置类配置到spring容器中。功能同上。
@@ -89,10 +90,18 @@ shdq.uaclient-1.0.jar [下载](https://pan.baidu.com/s/1NXEpyI7QvAz6XA8mVX7KGA)
       ns: 3
       # plc编号，自己定义
       plcNo: 1
+      # 安全模式，默认使用none，根据opcua server端配置设定
+      securityMode: none
+      # 用户认证模式，默认为Anonymous，不用配置用户名和密码。如果配置为username，则需要配置用户名和密码
+      userAuthenticationMode: anonymous
       # 连接opc ua服务的用户名
       username:
       # 连接opc ua服务的密码
       password:
+      # 如果用户认证模式为certificate，需要配置证书路径等，可以为url或者文件路径+文件名
+      certificateFileOrURL:
+      privateKeyFileOrURL:
+      privateKeyPassword:
       # 启动时判断是否要连接到这个plc提供的opc ua服务
       isConnect: true
       # 启动时判断是否要将配置的订阅节点和监听器设置到客户端中做订阅
@@ -106,8 +115,13 @@ shdq.uaclient-1.0.jar [下载](https://pan.baidu.com/s/1NXEpyI7QvAz6XA8mVX7KGA)
     - address: opc.tcp://FJY:53530/OPCUA/SimulationServer
       ns: 5
       plcNo: 2
+      securityMode: none
+      userAuthenticationMode: username
       username:
       password:
+      certificateFileOrURL:
+      privateKeyFileOrURL:
+      privateKeyPassword:
       isConnect: true
       isSubscribe: true
       Test: counter,random
