@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="00037dfe-123b-4d81-a29d-06d9297056c2" name="Default Changelist" comment="换行，改正readme文件错字。">
+    <list default="true" id="00037dfe-123b-4d81-a29d-06d9297056c2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/opc/uaclient/opcua/core/ClientCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/opc/uaclient/opcua/core/ClientCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/opc/uaclient/opcua/core/Connector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/opc/uaclient/opcua/core/Connector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/opc/uaclient/opcua/core/ListenerBinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/opc/uaclient/opcua/core/ListenerBinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/opc/uaclient/opcua/core/Subscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/opc/uaclient/opcua/core/Subscriber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/opcua.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/opcua.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +198,7 @@
       <workItem from="1575942364478" duration="1000" />
       <workItem from="1575942381156" duration="4120000" />
       <workItem from="1575948610155" duration="1011000" />
-      <workItem from="1575949880529" duration="5434000" />
+      <workItem from="1575949880529" duration="5891000" />
     </task>
     <task id="LOCAL-00001" summary="commit changes">
       <created>1575869914611</created>
@@ -233,7 +228,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575949574040</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="配置添加securityMode,userAuthenticationMode，并设置到uaclient中。目前用户认证模式只实现了Anonymous和username模式。">
+      <created>1575957359561</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1575957359561</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,65 +269,66 @@
     <MESSAGE value="增加配置入口类2，不使用@Configuration，使用时需要额外注册为spring bean。" />
     <MESSAGE value="跟新readme文件。" />
     <MESSAGE value="换行，改正readme文件错字。" />
-    <option name="LAST_COMMIT_MESSAGE" value="换行，改正readme文件错字。" />
+    <MESSAGE value="配置添加securityMode,userAuthenticationMode，并设置到uaclient中。目前用户认证模式只实现了Anonymous和username模式。" />
+    <option name="LAST_COMMIT_MESSAGE" value="配置添加securityMode,userAuthenticationMode，并设置到uaclient中。目前用户认证模式只实现了Anonymous和username模式。" />
   </component>
   <component name="WindowStateProjectService">
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1575865597936">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.834@0.0.1536.834" timestamp="1575865597936" />
-    <state x="442" y="5" key="CommitChangelistDialog2" timestamp="1575949894324">
+    <state x="219" y="13" key="CommitChangelistDialog2" timestamp="1575957358994">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="442" y="5" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1575949894324" />
+    <state x="219" y="13" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1575957358994" />
     <state x="549" y="172" key="FileChooserDialogImpl" timestamp="1575948618497">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="549" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1575948618497" />
-    <state width="1340" height="505" key="GridCell.Tab.0.bottom" timestamp="1575957198944">
+    <state width="1340" height="505" key="GridCell.Tab.0.bottom" timestamp="1575957491901">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1340" height="505" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1575957198944" />
-    <state width="1340" height="505" key="GridCell.Tab.0.center" timestamp="1575957198944">
+    <state width="1340" height="505" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1575957491901" />
+    <state width="1340" height="505" key="GridCell.Tab.0.center" timestamp="1575957491901">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1340" height="505" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1575957198944" />
-    <state width="1340" height="505" key="GridCell.Tab.0.left" timestamp="1575957198943">
+    <state width="1340" height="505" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1575957491901" />
+    <state width="1340" height="505" key="GridCell.Tab.0.left" timestamp="1575957491901">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1340" height="505" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1575957198943" />
-    <state width="1340" height="505" key="GridCell.Tab.0.right" timestamp="1575957198944">
+    <state width="1340" height="505" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1575957491901" />
+    <state width="1340" height="505" key="GridCell.Tab.0.right" timestamp="1575957491901">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1340" height="505" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1575957198944" />
-    <state width="1340" height="505" key="GridCell.Tab.1.bottom" timestamp="1575957198944">
+    <state width="1340" height="505" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1575957491901" />
+    <state width="1340" height="505" key="GridCell.Tab.1.bottom" timestamp="1575957491901">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1340" height="505" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1575957198944" />
-    <state width="1340" height="505" key="GridCell.Tab.1.center" timestamp="1575957198944">
+    <state width="1340" height="505" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1575957491901" />
+    <state width="1340" height="505" key="GridCell.Tab.1.center" timestamp="1575957491901">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1340" height="505" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1575957198944" />
-    <state width="1340" height="505" key="GridCell.Tab.1.left" timestamp="1575957198944">
+    <state width="1340" height="505" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1575957491901" />
+    <state width="1340" height="505" key="GridCell.Tab.1.left" timestamp="1575957491901">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1340" height="505" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1575957198944" />
-    <state width="1340" height="505" key="GridCell.Tab.1.right" timestamp="1575957198944">
+    <state width="1340" height="505" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1575957491901" />
+    <state width="1340" height="505" key="GridCell.Tab.1.right" timestamp="1575957491901">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1340" height="505" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1575957198944" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1575949575777">
+    <state width="1340" height="505" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1575957491901" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1575957361454">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1575949575777" />
-    <state x="449" y="241" key="com.intellij.ide.util.TipDialog" timestamp="1575949880831">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1575957361454" />
+    <state x="449" y="241" key="com.intellij.ide.util.TipDialog" timestamp="1576024498244">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="449" y="241" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1575949880831" />
-    <state x="562" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1575949888622">
+    <state x="449" y="241" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1576024498244" />
+    <state x="562" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1576024627225">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="562" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1575949888622" />
+    <state x="562" y="334" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1576024627225" />
     <state x="141" y="66" key="new project wizard" timestamp="1575942489780">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
