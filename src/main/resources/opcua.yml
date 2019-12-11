@@ -21,7 +21,7 @@
       ns: 5
       plcNo: 2
       securityMode: none
-      userAuthenticationMode: certificate
+      userAuthenticationMode: anonymous
       username: shdq
       password: 123456
       certificateFileOrURL:

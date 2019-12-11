@@ -10,6 +10,9 @@
 shdq.uaclient-1.0.jar [下载](https://pan.baidu.com/s/1NXEpyI7QvAz6XA8mVX7KGA)
 提取码: n92u
 
+shdq.uaclient-2.0.jar [下载](https://pan.baidu.com/s/11bJWqoTDUiiwfYuqdigeQQ)
+提取码: 7p4u
+
 ## 3 目录结构及说明
 
 ```text
