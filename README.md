@@ -13,17 +13,17 @@ shdq.uaclient-1.0.jar [下载](https://pan.baidu.com/s/1NXEpyI7QvAz6XA8mVX7KGA)
 shdq.uaclient-2.0.jar [下载](https://pan.baidu.com/s/11bJWqoTDUiiwfYuqdigeQQ)
 提取码: 7p4u
 
-*增加连接线程池资源释放功能*
+*增加连接线程池资源释放功能*  
 shdq.uaclient-3.0.jar [下载](https://pan.baidu.com/s/1ei_-Tc9pFL-WF9CSjDGS-A)
 提取码: 6ntx
 
-*移除spring retry*
-shdq.uaclient-3.1.jar [下载](https://pan.baidu.com/s/10BU3ByV5nPRlc4cJc2oJow)
-提取码: 4j1f
+*移除spring retry*  
+shdq.uaclient-3.1.jar [下载](https://pan.baidu.com/s/1HKsXEX57GdwbmtUyZWGbWQ)
+提取码: hsia
 
 *无相关依赖，包中使用的依赖需要自己导入*
-shdq.uaclient-3.2.jar [下载](https://pan.baidu.com/s/1tHKVzc5nfLd3wvmbRfrxWw)
-提取码: ek1c
+shdq.uaclient-3.2.jar [下载](https://pan.baidu.com/s/1I6FkG_3HgauS4CBU0xMUBg)
+提取码: ymfj
 
 ```java
 <dependency>
@@ -112,6 +112,7 @@ shdq.uaclient-3.2.jar [下载](https://pan.baidu.com/s/1tHKVzc5nfLd3wvmbRfrxWw)
   # 如果服务端中节点的刷新速率小于publishRate，会发生漏读的现象。
   publishRate: 100
   # spring提供的RetryTemplate模板配置
+  # 3.1及3.1后版本不需要配置，已经移除了spring retry
   retry:
     connBackOffPeriod: 10000
     maxAttempts: 3
