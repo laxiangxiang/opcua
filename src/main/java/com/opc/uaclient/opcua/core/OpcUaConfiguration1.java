@@ -24,11 +24,9 @@ import java.util.stream.Collectors;
  * 版本1.已经配置好的版本
  * @author fujun
  */
-//@Configuration
+@Configuration
 @Slf4j
 public class OpcUaConfiguration1 {
-
-    private Relation relation = Relation.getInstance();
 
     @Autowired
     private OpcUaProperties properties;

@@ -13,6 +13,35 @@ shdq.uaclient-1.0.jar [下载](https://pan.baidu.com/s/1NXEpyI7QvAz6XA8mVX7KGA)
 shdq.uaclient-2.0.jar [下载](https://pan.baidu.com/s/11bJWqoTDUiiwfYuqdigeQQ)
 提取码: 7p4u
 
+*增加连接线程池资源释放功能*
+shdq.uaclient-3.0.jar [下载](https://pan.baidu.com/s/1ei_-Tc9pFL-WF9CSjDGS-A)
+提取码: 6ntx
+
+*移除spring retry*
+shdq.uaclient-3.1.jar [下载](https://pan.baidu.com/s/10BU3ByV5nPRlc4cJc2oJow)
+提取码: 4j1f
+
+*无相关依赖，包中使用的依赖需要自己导入*
+shdq.uaclient-3.2.jar [下载](https://pan.baidu.com/s/1tHKVzc5nfLd3wvmbRfrxWw)
+提取码: ek1c
+
+```java
+<dependency>
+  <groupId>commons-lang</groupId>
+  <artifactId>commons-lang</artifactId>
+  <version>2.6</version>
+</dependency>
+<dependency>
+  <groupId>org.projectlombok</groupId>
+  <artifactId>lombok</artifactId>
+</dependency>
+<dependency>
+  <groupId>com.esotericsoftware.yamlbeans</groupId>
+  <artifactId>yamlbeans</artifactId>
+  <version>1.13</version>
+</dependency>
+```
+
 ## 3 目录结构及说明
 
 ```text
@@ -79,7 +108,9 @@ shdq.uaclient-2.0.jar [下载](https://pan.baidu.com/s/11bJWqoTDUiiwfYuqdigeQQ)
   # 节点解析器
   nodesParser: com.example.demo.parser.MyParser
   # 监听器刷新率（推送响应速率）
-  publishingRate: 100
+  # 每隔publishRate毫秒客户端会给所有订阅的节点发送一次publishRequest请求，对应每一个请求返回一个publishResponse响应。
+  # 如果服务端中节点的刷新速率小于publishRate，会发生漏读的现象。
+  publishRate: 100
   # spring提供的RetryTemplate模板配置
   retry:
     connBackOffPeriod: 10000
@@ -105,6 +136,9 @@ shdq.uaclient-2.0.jar [下载](https://pan.baidu.com/s/11bJWqoTDUiiwfYuqdigeQQ)
       certificateFileOrURL:
       privateKeyFileOrURL:
       privateKeyPassword:
+      clientListener: com.opc.uaclient.uaclientlistener.MyUaClientListener
+      # 会话过期时间
+      sessionTimeOut: 1
       # 启动时判断是否要连接到这个plc提供的opc ua服务
       isConnect: true
       # 启动时判断是否要将配置的订阅节点和监听器设置到客户端中做订阅
@@ -125,6 +159,8 @@ shdq.uaclient-2.0.jar [下载](https://pan.baidu.com/s/11bJWqoTDUiiwfYuqdigeQQ)
       certificateFileOrURL:
       privateKeyFileOrURL:
       privateKeyPassword:
+      clientListener: com.opc.uaclient.uaclientlistener.MyUaClientListener
+      sessionTimeOut: 1
       isConnect: true
       isSubscribe: true
       Test: counter,random
