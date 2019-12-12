@@ -6,12 +6,14 @@ import com.opc.uaclient.opcua.pojo.UaClientPOJO;
 import com.opc.uaclient.opcua.util.OpcUaUtil;
 import com.opc.uaclient.opcua.util.YamlConverter;
 import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -22,7 +24,7 @@ import java.util.concurrent.ExecutorService;
  * @author fujun
  */
 @Slf4j
-@Data
+@Getter
 public class OpcUaConfiguration2 {
 
     private Relation relation = Relation.getInstance();
@@ -50,20 +52,15 @@ public class OpcUaConfiguration2 {
             log.error(e.getMessage());
             return;
         }
-        getConnection();
+        opcUaTemplate.getConnection(subscriber);
+        //等待连接上所有plc后释放线程池资源
+        OpcUaUtil.latch.await();
+        OpcUaUtil.release();
     }
 
-    /**
-     * 客户端连接plc
-     */
-    private void getConnection(){
-        List<UaClientPOJO> uaClientPOJOS = relation.getUaClientPOJOS();
-        ExecutorService executorService = OpcUaUtil.createThreadPool(uaClientPOJOS.size());
-        for (UaClientPOJO uaClientPOJO : uaClientPOJOS) {
-            executorService.execute(
-                    new Connector(uaClientPOJO, subscriber)
-            );
-        }
+    @PreDestroy
+    public void destroy(){
+        opcUaTemplate.closeAll();
     }
 
     /**

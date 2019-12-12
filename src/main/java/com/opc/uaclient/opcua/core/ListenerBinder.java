@@ -22,7 +22,7 @@ public class ListenerBinder {
             "isSubscribe","plcNo","ns","securityMode",
             "userAuthenticationMode","sessionTimeOut",
             "certificateFileOrURL","privateKeyFileOrURL",
-            "privateKeyPassword");
+            "privateKeyPassword","clientListener");
 
     private static Relation relation = Relation.getInstance();
 

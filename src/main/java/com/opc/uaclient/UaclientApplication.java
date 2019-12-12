@@ -24,8 +24,8 @@ public class UaclientApplication {
      * 使用配置入口类2的配置方式
      * @return
      */
-//    @Bean
-//    public OpcUaConfiguration2 opcUaConfiguration2(){
-//        return new OpcUaConfiguration2();
-//    }
+    @Bean
+    public OpcUaConfiguration2 opcUaConfiguration2(){
+        return new OpcUaConfiguration2();
+    }
 }

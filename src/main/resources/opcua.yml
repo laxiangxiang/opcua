@@ -1,22 +1,31 @@
   listenerPath: com.opc.uaclient.listener.
   nodesParser: com.opc.uaclient.parser.MyParser
-  publishingRate: 100
+  # 每隔publishRate毫秒客户端会给所有订阅的节点发送一次publishRequest请求，对应每一个请求返回一个publishResponse响应。
+  # 如果服务端中节点的刷新速率小于publishRate，会发生漏读的现象。
+  publishRate: 100
   retry:
     connBackOffPeriod: 10000
     maxAttempts: 3
     backOffPeriod: 1000
   plcList:
-#    - address: opc.tcp://10.28.213.213:4840
-#      ns: 3
-#      plcNo: 1
-#      username:
-#      password:
-#      isConnect: true
-#      isSubscribe: true
-#      wareHouseSidePalletRfid: NodeBase# "OPCUA"
-#        - SubsribeNode# "1_PalletCode"
-#      transferRfid: NodeBase# "OffLineData"
-#        - SubsribeNode# "22_Data"
+    - address: opc.tcp://10.28.213.213:4840
+      ns: 3
+      plcNo: 1
+      securityMode: none
+      userAuthenticationMode: anonymous
+      username: shdq
+      password: 123456
+      certificateFileOrURL:
+      privateKeyFileOrURL:
+      privateKeyPassword:
+      clientListener: com.opc.uaclient.uaclientlistener.MyUaClientListener
+      sessionTimeOut: 1
+      isConnect: false
+      isSubscribe: true
+      wareHouseSidePalletRfid: NodeBase# "OPCUA"
+        - SubsribeNode# "1_PalletCode"
+      transferRfid: NodeBase# "OffLineData"
+        - SubsribeNode# "22_Data"
     - address: opc.tcp://shdq-thinkpad:53530/OPCUA/SimulationServer
       ns: 5
       plcNo: 2
@@ -27,6 +36,7 @@
       certificateFileOrURL:
       privateKeyFileOrURL:
       privateKeyPassword:
+      clientListener: com.opc.uaclient.uaclientlistener.MyUaClientListener
 #      会话过期时间，单位天
       sessionTimeOut: 1
       isConnect: true

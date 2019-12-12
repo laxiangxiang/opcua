@@ -18,7 +18,7 @@ public class OpcUaProperties {
     private Retry retry;
 
     //推送响应速率
-    private long publishingRate;
+    private long publishRate;
 
     //对应的opc 站点队列
     private List<Map<String, String>> plcList;

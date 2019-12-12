@@ -16,6 +16,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class OpcUaUtil {
     private  static Map<String,Object>  LAST_NODE_VALUE_MAP=new ConcurrentHashMap();
     private final static AtomicInteger threadNumber = new AtomicInteger(1);
+    public static ExecutorService executorService;
+    public static CountDownLatch latch;
 
     /**
      * @param plcIndex  opcUA对应的服务的url
@@ -71,19 +73,29 @@ public class OpcUaUtil {
      * @return
      */
     public static ExecutorService createThreadPool(int num){
-        return Executors.newFixedThreadPool(num, new ThreadFactory() {
-            @Override
-            public Thread newThread(Runnable r) {
-                //创建一个线程，定义名称为"order-thread"
-                Thread th = new Thread(r,"conn2plc-thread"+threadNumber.getAndIncrement());
-                //判断如果线程优先级被修改，那么改变优先级状态
-                if(th.getPriority() != Thread.NORM_PRIORITY) {
-                    th.setPriority(Thread.NORM_PRIORITY);
+        if (executorService == null){
+            executorService = Executors.newFixedThreadPool(num, new ThreadFactory() {
+                @Override
+                public Thread newThread(Runnable r) {
+                    //创建一个线程，定义名称为"order-thread"
+                    Thread th = new Thread(r,"conn2plc-thread"+threadNumber.getAndIncrement());
+                    //判断如果线程优先级被修改，那么改变优先级状态
+                    if(th.getPriority() != Thread.NORM_PRIORITY) {
+                        th.setPriority(Thread.NORM_PRIORITY);
+                    }
+                    th.setDaemon(true);
+                    return th;
                 }
-                th.setDaemon(true);
-                return th;
-            }
-        });
+            });
+            latch = new CountDownLatch(num);
+        }
+        return executorService;
+    }
+
+    public static void release(){
+        if (executorService != null){
+            executorService.shutdown();
+        }
     }
 }
 

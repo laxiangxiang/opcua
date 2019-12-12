@@ -2,9 +2,12 @@ package com.opc.uaclient.opcua.core;
 
 import com.opc.uaclient.opcua.exception.OpcUaClientException;
 import com.opc.uaclient.opcua.pojo.UaClientPOJO;
+import com.opc.uaclient.opcua.util.OpcUaUtil;
 import com.prosysopc.ua.client.UaClient;
-import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.CountDownLatch;
 
 /**
  * opcua客户端端连接服务端连接器
@@ -12,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author fujun
  */
 @Slf4j
-@Data
+@Getter
 public class Connector implements Runnable{
 
     private UaClientPOJO uaClientPOJO;
@@ -84,26 +87,37 @@ public class Connector implements Runnable{
 
     /**
      * 根据UaClient连接相应OPCUA服务并调用启动订阅的功能
+     * 正在连接服务端的线程状态为RUNNABLE、TIME_WAITED状态，
+     * 连接成功的线程状态变为WAITED状态，
+     * 连接成功后，状态为WAITED的线程会被销毁，
      * @return
      * @throws OpcUaClientException
      */
     protected boolean connect(){
         UaClient uaClient = uaClientPOJO.getUaClient();
-        if (!uaClient.isConnected()) {
-            log.info("connecting ua server:{}", uaClient.getUri());
-            try {
-                uaClient.connect();
-                log.info("connect success:{}",uaClient.getUri());
+        //自旋连接
+        for (;;){
+            if (!isConnected || !uaClient.isConnected()) {
+                log.info("connecting ua server:{}", uaClient.getUri());
+                try {
+                    uaClient.connect();
+                    log.info("connect success:{}",uaClient.getUri());
+                    isConnected = true;
+                    break;
+                } catch (Exception e) {
+                    log.error("connect ua server failed:{}", uaClient.getUri());
+                    isConnected = false;
+                    continue;
+                }
+            } else {
                 isConnected = true;
-                return true;
-            } catch (Exception e) {
-                log.error("connect ua server failed:{}", uaClient.getUri());
-                isConnected = false;
-                return false;
+                break;
             }
-        } else {
-            isConnected = true;
-            return true;
         }
+        if (OpcUaUtil.latch != null){
+            OpcUaUtil.latch.countDown();
+        }
+        //连接线程连接上服务端后，销毁当前连接线程
+        return isConnected;
     }
 }

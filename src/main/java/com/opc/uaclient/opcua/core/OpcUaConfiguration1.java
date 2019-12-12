@@ -14,15 +14,17 @@ import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
+import java.util.stream.Collectors;
 
 /**
  * 客户端配置入口
  * 版本1.已经配置好的版本
  * @author fujun
  */
-@Configuration
+//@Configuration
 @Slf4j
 public class OpcUaConfiguration1 {
 
@@ -35,33 +37,31 @@ public class OpcUaConfiguration1 {
     private RetryTemplate retryTemplate;
 
     @Autowired
+    private OpcUaTemplate template;
+
+    @Autowired
     private Subscriber subscriber;
 
     /**
      * 在构造器中读取配置文件，创建opcUaClientFactory
      */
     @PostConstruct
-    public void InitOpcUaConfiguration() {
+    public void InitOpcUaConfiguration() throws InterruptedException{
         try {
             ListenerBinder.bind(properties);
         }catch (OpcUaClientException e){
             log.error(e.getMessage());
             return;
         }
-        getConnection();
+        template.getConnection(subscriber);
+        //等待连接上所有plc后释放线程池资源
+        OpcUaUtil.latch.await();
+        OpcUaUtil.release();
     }
 
-    /**
-     * 客户端连接plc
-     */
-    private void getConnection(){
-        List<UaClientPOJO> uaClientPOJOS = relation.getUaClientPOJOS();
-        ExecutorService executorService = OpcUaUtil.createThreadPool(uaClientPOJOS.size());
-        for (UaClientPOJO uaClientPOJO : uaClientPOJOS) {
-            executorService.execute(
-                    new Connector(uaClientPOJO, subscriber)
-            );
-        }
+    @PreDestroy
+    public void destroy(){
+        template.closeAll();
     }
 
     /**

@@ -3,6 +3,7 @@ package com.opc.uaclient.opcua.core;
 import com.opc.uaclient.opcua.exception.OpcUaClientException;
 import com.opc.uaclient.opcua.pojo.Relation;
 import com.opc.uaclient.opcua.pojo.UaClientPOJO;
+import com.opc.uaclient.opcua.util.OpcUaUtil;
 import com.prosysopc.ua.ServiceException;
 import com.prosysopc.ua.StatusException;
 import com.prosysopc.ua.client.*;
@@ -10,6 +11,7 @@ import com.prosysopc.ua.nodes.UaDataType;
 import com.prosysopc.ua.nodes.UaNode;
 import com.prosysopc.ua.nodes.UaVariable;
 import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.opcfoundation.ua.builtintypes.DataValue;
 import org.opcfoundation.ua.builtintypes.NodeId;
@@ -17,18 +19,21 @@ import org.opcfoundation.ua.builtintypes.UnsignedInteger;
 import org.opcfoundation.ua.builtintypes.Variant;
 import org.opcfoundation.ua.core.Attributes;
 import org.opcfoundation.ua.core.MonitoringMode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.retry.support.RetryTemplate;
 
 import java.lang.reflect.Array;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * opcUa 客户端模板，创建客户端实例
  * 并提供客户端连接，配置节点的注册与监听
  */
-@Data
+@Getter
 @Slf4j
 public class OpcUaTemplate {
 
@@ -45,6 +50,16 @@ public class OpcUaTemplate {
     public OpcUaTemplate(OpcUaProperties opcUaProperties, RetryTemplate retryTemplate) {
         this.retryTemplate = retryTemplate;
         this.properties = opcUaProperties;
+    }
+
+    /**
+     * 客户端连接plc
+     */
+    public void getConnection(Subscriber subscriber){
+        List<UaClientPOJO> uaClientPOJOS = relation.getUaClientPOJOS();
+        List<UaClientPOJO> uaClientPOJOList = uaClientPOJOS.stream().filter(uaClientPOJO -> uaClientPOJO.isConnect()).collect(Collectors.toList());
+        ExecutorService executorService = OpcUaUtil.createThreadPool(uaClientPOJOList.size());
+        uaClientPOJOList.stream().forEach(uaClientPOJO -> executorService.execute(new Connector(uaClientPOJO,subscriber)));
     }
 
     /**
@@ -102,7 +117,7 @@ public class OpcUaTemplate {
     private boolean doSubscribeNodeValue(UaClient uaClient, NodeId id, MonitoredDataItemListener listener) {
         try {
             Subscription subscription = new Subscription();
-            subscription.setPublishingInterval(properties.getPublishingRate(), TimeUnit.MILLISECONDS);
+            subscription.setPublishingInterval(properties.getPublishRate(), TimeUnit.MILLISECONDS);
             MonitoredDataItem item = new MonitoredDataItem(id, Attributes.Value, MonitoringMode.Reporting, subscription.getPublishingInterval());
             item.setDataChangeListener(listener);
             subscription.addItem(item);
@@ -224,13 +239,16 @@ public class OpcUaTemplate {
     }
 
     /**
-     * 关闭OPCUA的连接
+     * 关闭所有的连接
      */
-    public void close() {
-        log.info("执行销毁>>>>>>>");
+    public void closeAll() {
+        log.info("正在关闭所有连接。。。。");
         List<UaClientPOJO> uaClientPOJOS = Relation.getInstance().getUaClientPOJOS();
-        for (UaClientPOJO uaClientPOJO : uaClientPOJOS) {
-            uaClientPOJO.getUaClient().disconnect();
-        }
+        uaClientPOJOS.stream()
+                .filter(uaClientPOJO -> uaClientPOJO.isConnect())
+                .forEach(uaClientPOJO -> {
+                    uaClientPOJO.getUaClient().disconnect();
+                    log.info("{} 连接已关闭。",uaClientPOJO.getUaClient().getUri());
+                });
     }
 }

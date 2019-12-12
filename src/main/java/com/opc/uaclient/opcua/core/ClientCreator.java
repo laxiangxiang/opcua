@@ -1,20 +1,17 @@
 package com.opc.uaclient.opcua.core;
 
+import com.opc.uaclient.opcua.clientlistener.DefaultUaClientListener;
+import com.opc.uaclient.opcua.clientlistener.UaClientListener;
 import com.opc.uaclient.opcua.exception.OpcUaClientException;
 import com.opc.uaclient.opcua.pojo.Relation;
 import com.opc.uaclient.opcua.pojo.UaClientPOJO;
-import com.prosysopc.ua.SessionActivationException;
 import com.prosysopc.ua.UserIdentity;
 import com.prosysopc.ua.client.UaClient;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.opcfoundation.ua.transport.security.SecurityMode;
-import sun.font.DelegatingShape;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -38,14 +35,15 @@ public class ClientCreator {
         String securityMode = plc.get("securityMode");
         //用户认证模式
         String userAuthenticationMode = plc.get("userAuthenticationMode");
+        String clientListener = plc.get("clientListener");
         boolean isConnect = Boolean.valueOf(plc.get("isConnect"));
         boolean isSubscribe = Boolean.valueOf(plc.get("isSubscribe"));
         UaClient uaClient;
         uaClient=new UaClient(address);
         setSecurityMode(uaClient,securityMode);
         setUserAuthenticationMode(uaClient,userAuthenticationMode,plc);
+        setUaClientListener(uaClient,clientListener);
         uaClient.setAutoReconnect(true);
-//       uaClient.setListener(new DefaultUaClientListener());
         uaClient.setKeepSubscriptions(true);
         uaClient.setSessionName("plc:"+plcNo);
         uaClient.setSessionTimeout(sessionTimeOut, TimeUnit.DAYS);
@@ -118,6 +116,22 @@ public class ClientCreator {
             return;
         }else if (userAuthenticationMode.equalsIgnoreCase(Mode.UserAuthenticationMode.Kerberos.getName())){
             return;
+        }
+    }
+
+    private static void setUaClientListener(UaClient uaClient,String clientListener){
+        if (StringUtils.isBlank(clientListener)){
+            uaClient.setListener(new DefaultUaClientListener());
+        }else {
+            try {
+                Class clazz = Class.forName(clientListener.trim());
+                uaClient.setListener((UaClientListener)clazz.newInstance());
+            }catch (Exception e){
+                if (e instanceof ClassNotFoundException){
+                    log.error("配置的客户端监听器不存在。");
+                }
+                e.printStackTrace();
+            }
         }
     }
 
