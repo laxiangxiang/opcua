@@ -60,7 +60,7 @@ public class OpcUaConfiguration2 {
 
     @PreDestroy
     public void destroy(){
-        opcUaTemplate.closeAll();
+        opcUaTemplate.disconnect();
     }
 
     /**

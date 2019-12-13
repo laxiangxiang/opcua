@@ -15,7 +15,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class OpcUaUtil {
     private  static Map<String,Object>  LAST_NODE_VALUE_MAP=new ConcurrentHashMap();
-    private final static AtomicInteger threadNumber = new AtomicInteger(1);
+    private final static AtomicInteger threadNo = new AtomicInteger(1);
+    private static int needConnectClientNum;
     public static ExecutorService executorService;
     public static CountDownLatch latch;
 
@@ -73,12 +74,13 @@ public class OpcUaUtil {
      * @return
      */
     public static ExecutorService createThreadPool(int num){
+        needConnectClientNum = num;
         if (executorService == null){
             executorService = Executors.newFixedThreadPool(num, new ThreadFactory() {
                 @Override
                 public Thread newThread(Runnable r) {
                     //创建一个线程，定义名称为"order-thread"
-                    Thread th = new Thread(r,"conn2plc-thread"+threadNumber.getAndIncrement());
+                    Thread th = new Thread(r,"conn2plc-thread"+ threadNo.getAndIncrement());
                     //判断如果线程优先级被修改，那么改变优先级状态
                     if(th.getPriority() != Thread.NORM_PRIORITY) {
                         th.setPriority(Thread.NORM_PRIORITY);
@@ -87,7 +89,7 @@ public class OpcUaUtil {
                     return th;
                 }
             });
-            latch = new CountDownLatch(num);
+            latch = new CountDownLatch(needConnectClientNum);
         }
         return executorService;
     }
@@ -96,6 +98,13 @@ public class OpcUaUtil {
         if (executorService != null){
             executorService.shutdown();
         }
+    }
+
+    /**
+     * 恢复countDownLatch
+     */
+    public static void resume(){
+        latch = new CountDownLatch(needConnectClientNum);
     }
 }
 

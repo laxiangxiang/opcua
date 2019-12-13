@@ -117,7 +117,6 @@ public class Connector implements Runnable{
         if (OpcUaUtil.latch != null){
             OpcUaUtil.latch.countDown();
         }
-        //连接线程连接上服务端后，销毁当前连接线程
         return isConnected;
     }
 }

@@ -34,7 +34,7 @@ public class OpcUaController {
 
     @RequestMapping("close")
     public void close(){
-        template.closeAll();
+        template.close();
     }
 
     @RequestMapping("/connect")

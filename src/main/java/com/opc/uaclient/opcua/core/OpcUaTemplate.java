@@ -239,9 +239,21 @@ public class OpcUaTemplate {
     }
 
     /**
-     * 关闭所有的连接
+     * 调用此方法可以关闭所有的连接，可以再调用 getConnection(Subscriber subscriber)方法再次配置连接
      */
-    public void closeAll() {
+    public void close() {
+        closeAllConnection();
+        OpcUaUtil.resume();
+    }
+
+    /**
+     * bean销毁时主动调用，主动断开所有连接
+     */
+    protected void disconnect(){
+        closeAllConnection();
+    }
+
+    private void closeAllConnection(){
         log.info("正在关闭所有连接。。。。");
         List<UaClientPOJO> uaClientPOJOS = Relation.getInstance().getUaClientPOJOS();
         uaClientPOJOS.stream()

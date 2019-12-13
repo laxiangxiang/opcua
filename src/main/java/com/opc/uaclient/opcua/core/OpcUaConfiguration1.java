@@ -59,7 +59,7 @@ public class OpcUaConfiguration1 {
 
     @PreDestroy
     public void destroy(){
-        template.closeAll();
+        template.disconnect();
     }
 
     /**
