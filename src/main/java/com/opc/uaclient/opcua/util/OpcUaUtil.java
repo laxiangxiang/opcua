@@ -76,7 +76,7 @@ public class OpcUaUtil {
     public static ExecutorService createThreadPool(int num){
         needConnectClientNum = num;
         if (executorService == null){
-            executorService = Executors.newFixedThreadPool(num, new ThreadFactory() {
+            executorService = Executors.newFixedThreadPool(needConnectClientNum, new ThreadFactory() {
                 @Override
                 public Thread newThread(Runnable r) {
                     //创建一个线程，定义名称为"order-thread"

@@ -22,8 +22,8 @@ shdq.uaclient-3.1.jar [下载](https://pan.baidu.com/s/1HKsXEX57GdwbmtUyZWGbWQ)
 提取码: hsia
 
 *无相关依赖，包中使用的依赖需要自己导入*
-shdq.uaclient-3.2.jar [下载](https://pan.baidu.com/s/1I6FkG_3HgauS4CBU0xMUBg)
-提取码: ymfj
+shdq.uaclient-3.2.jar [下载](https://pan.baidu.com/s/1Up0F5L-Y1o_KiT3O4rXx7A)
+提取码: gzsu
 
 ```java
 <dependency>
