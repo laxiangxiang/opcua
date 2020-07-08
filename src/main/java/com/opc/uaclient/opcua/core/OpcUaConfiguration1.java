@@ -53,6 +53,9 @@ public class OpcUaConfiguration1 {
         }
         template.getConnection(subscriber);
         //等待连接上所有plc后释放线程池资源
+        /**
+         * todo:是否应该启用一个线程执行下面步骤？
+         */
         OpcUaUtil.latch.await();
         OpcUaUtil.release();
     }

@@ -25,6 +25,11 @@ shdq.uaclient-3.1.jar [下载](https://pan.baidu.com/s/1HKsXEX57GdwbmtUyZWGbWQ)
 shdq.uaclient-3.2.jar [下载](https://pan.baidu.com/s/1Up0F5L-Y1o_KiT3O4rXx7A)
 提取码: gzsu
 
+*解决在项目中依赖此项目，打包后YamlConverter找不到系统路径的问题
+shdq.uaclient-3.3.jar [下载](https://pan.baidu.com/s/14qCxaukFe5lFPOZE1OR-QA)
+提取码：ifwk
+
+
 ```java
 <dependency>
   <groupId>commons-lang</groupId>

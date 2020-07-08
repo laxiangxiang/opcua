@@ -27,7 +27,7 @@ public class ListenerBinder {
     private static Relation relation = Relation.getInstance();
 
     /**
-     * 解析订阅的几点，并生成订阅节点列表对应的监听器类名称，做初步绑定。
+     * 解析订阅的节点，并生成订阅节点列表对应的监听器类名称，做初步绑定。
      * @param properties
      */
     public static void bind(OpcUaProperties  properties) throws OpcUaClientException{
