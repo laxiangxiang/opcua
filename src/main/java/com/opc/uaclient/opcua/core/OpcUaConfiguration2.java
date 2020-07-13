@@ -8,6 +8,7 @@ import com.opc.uaclient.opcua.util.YamlConverter;
 import lombok.Data;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
@@ -23,6 +24,7 @@ import java.util.concurrent.ExecutorService;
  * 版本2：未配置，把当前类配置到spring容器中即可
  * @author fujun
  */
+@Configuration
 @Slf4j
 @Getter
 public class OpcUaConfiguration2 {
@@ -44,8 +46,8 @@ public class OpcUaConfiguration2 {
     public void InitOpcUaConfiguration() throws Exception{
         try {
             properties = convertYAML2Properties();
-            retryTemplate = createRetryTemplate();
-            opcUaTemplate = createOpcUaClientTemplate(properties,retryTemplate);
+//            retryTemplate = createRetryTemplate();
+            opcUaTemplate = createOpcUaClientTemplate(properties);
             subscriber = createUaClientSubscribe(opcUaTemplate);
             ListenerBinder.bind(properties);
         }catch (OpcUaClientException e){
@@ -78,8 +80,8 @@ public class OpcUaConfiguration2 {
     }
 
 
-    public OpcUaTemplate createOpcUaClientTemplate(OpcUaProperties properties, RetryTemplate retryTemplate){
-        return new OpcUaTemplate(properties,retryTemplate);
+    public OpcUaTemplate createOpcUaClientTemplate(OpcUaProperties properties){
+        return new OpcUaTemplate(properties);
     }
 
     public RetryTemplate createRetryTemplate(){

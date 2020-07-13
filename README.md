@@ -29,6 +29,13 @@ shdq.uaclient-3.2.jar [下载](https://pan.baidu.com/s/1Up0F5L-Y1o_KiT3O4rXx7A)
 shdq.uaclient-3.3.jar [下载](https://pan.baidu.com/s/14qCxaukFe5lFPOZE1OR-QA)
 提取码：ifwk
 
+*解决旧版本中如果isConnect设为false时项目（spring，spring boot）启动时会一直卡在OpcUaConfiguration初始化方法的
+```Java
+OpcUaUtil.latch.await();
+```
+这一步;解决客户端连接订阅节点时重复连接订阅的问题
+shdq.uaclient-3.4.jar [下载](https://pan.baidu.com/s/1E-FZD3AsltKCiBQ6WuXiag)
+提取码：byrn
 
 ```java
 <dependency>

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OpcUaController {
 
-    @Autowired
+//    @Autowired
     private OpcUaTemplate template;
 
     private static Relation relation = Relation.getInstance();

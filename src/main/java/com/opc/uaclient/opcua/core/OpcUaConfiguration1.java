@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
  * 版本1.已经配置好的版本
  * @author fujun
  */
-@Configuration
 @Slf4j
 public class OpcUaConfiguration1 {
 

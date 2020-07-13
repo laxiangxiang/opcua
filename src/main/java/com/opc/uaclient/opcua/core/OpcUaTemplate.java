@@ -52,14 +52,20 @@ public class OpcUaTemplate {
         this.properties = opcUaProperties;
     }
 
+    public OpcUaTemplate(OpcUaProperties opcUaProperties) {
+        this.properties = opcUaProperties;
+    }
+
     /**
      * 客户端连接plc
      */
     public void getConnection(Subscriber subscriber){
         List<UaClientPOJO> uaClientPOJOS = relation.getUaClientPOJOS();
-        List<UaClientPOJO> uaClientPOJOList = uaClientPOJOS.stream().filter(uaClientPOJO -> uaClientPOJO.isConnect()).collect(Collectors.toList());
-        ExecutorService executorService = OpcUaUtil.createThreadPool(uaClientPOJOList.size());
-        uaClientPOJOList.stream().forEach(uaClientPOJO -> executorService.execute(new Connector(uaClientPOJO,subscriber)));
+//        List<UaClientPOJO> uaClientPOJOList = uaClientPOJOS.stream().filter(uaClientPOJO -> uaClientPOJO.isConnect()).collect(Collectors.toList());
+        if (uaClientPOJOS.size() > 0){
+            ExecutorService executorService = OpcUaUtil.createThreadPool(uaClientPOJOS.size());
+            uaClientPOJOS.stream().forEach(uaClientPOJO -> executorService.execute(new Connector(uaClientPOJO,subscriber)));
+        }
     }
 
     /**
