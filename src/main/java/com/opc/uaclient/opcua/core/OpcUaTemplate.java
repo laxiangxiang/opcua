@@ -10,7 +10,6 @@ import com.prosysopc.ua.client.*;
 import com.prosysopc.ua.nodes.UaDataType;
 import com.prosysopc.ua.nodes.UaNode;
 import com.prosysopc.ua.nodes.UaVariable;
-import lombok.Data;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.opcfoundation.ua.builtintypes.DataValue;
@@ -19,7 +18,6 @@ import org.opcfoundation.ua.builtintypes.UnsignedInteger;
 import org.opcfoundation.ua.builtintypes.Variant;
 import org.opcfoundation.ua.core.Attributes;
 import org.opcfoundation.ua.core.MonitoringMode;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.retry.support.RetryTemplate;
 
 import java.lang.reflect.Array;
@@ -27,7 +25,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 /**
  * opcUa 客户端模板，创建客户端实例
@@ -64,7 +61,7 @@ public class OpcUaTemplate {
 //        List<UaClientPOJO> uaClientPOJOList = uaClientPOJOS.stream().filter(uaClientPOJO -> uaClientPOJO.isConnect()).collect(Collectors.toList());
         if (uaClientPOJOS.size() > 0){
             ExecutorService executorService = OpcUaUtil.createThreadPool(uaClientPOJOS.size());
-            uaClientPOJOS.stream().forEach(uaClientPOJO -> executorService.execute(new Connector(uaClientPOJO,subscriber)));
+            uaClientPOJOS.forEach(uaClientPOJO -> executorService.execute(new Connector(uaClientPOJO,subscriber)));
         }
     }
 
@@ -141,7 +138,7 @@ public class OpcUaTemplate {
                 if (ns == null){
                     ns = String.valueOf(uaClientPOJO.getNs());
                 }
-                writeNodeValue(uaClientPOJO,new NodeId(Integer.valueOf(ns),nodeName),value);
+                writeNodeValue(uaClientPOJO,new NodeId(Integer.parseInt(ns),nodeName),value);
             }
         }
     }
@@ -172,7 +169,8 @@ public class OpcUaTemplate {
             UaClient uaClient = uaClientPOJO.getUaClient();
             UaNode node = uaClient.getAddressSpace().getNode(nodeId);
             UaDataType dataType = null;
-            if (attributeId.equals(Attributes.Value) && (node instanceof UaVariable)) {
+//            if (attributeId.equals(Attributes.Value) && (node instanceof UaVariable)) {
+                if (node instanceof UaVariable) {
                 UaVariable v = (UaVariable) node;
                 if (v.getDataType() == null) {
                     v.setDataType(uaClient.getAddressSpace().getType(v.getDataTypeId()));
@@ -185,6 +183,7 @@ public class OpcUaTemplate {
                 Object newArray = null;
                 for (int i = 0; i < array.length; i++) {
                     Object el = dataType != null ? uaClient.getAddressSpace().getDataTypeConverter().parseVariant(array[i].toString(), dataType) : value;
+                    assert el instanceof Variant;
                     Object v = ((Variant) el).getValue();
                     if (newArray == null) {
                         newArray = Array.newInstance(v.getClass(), array.length);
@@ -208,7 +207,7 @@ public class OpcUaTemplate {
                 if (ns == null){
                     ns = String.valueOf(uaClientPOJO.getNs());
                 }
-                Variant variant = readNodeVariant(uaClientPOJO,new NodeId(Integer.valueOf(ns),nodeName));
+                Variant variant = readNodeVariant(uaClientPOJO,new NodeId(Integer.parseInt(ns),nodeName));
                 return String.valueOf(variant.getValue());
             }
         }
@@ -263,7 +262,7 @@ public class OpcUaTemplate {
         log.info("正在关闭所有连接。。。。");
         List<UaClientPOJO> uaClientPOJOS = Relation.getInstance().getUaClientPOJOS();
         uaClientPOJOS.stream()
-                .filter(uaClientPOJO -> uaClientPOJO.isConnect())
+                .filter(UaClientPOJO::isConnect)
                 .forEach(uaClientPOJO -> {
                     uaClientPOJO.getUaClient().disconnect();
                     log.info("{} 连接已关闭。",uaClientPOJO.getUaClient().getUri());

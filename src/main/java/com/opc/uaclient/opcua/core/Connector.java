@@ -43,13 +43,14 @@ public class Connector implements Runnable{
             return true;
         }
         if(uaClientPOJO.isConnect()){
-            if (uaClientPOJO.isSubscribe()){
-                //如果是要连接并且需要订阅监听节点，选择订阅方法，防止重复连接。
-                return listen();
-            }else{
-                //如果是连接但是不订阅监听节点，选择connect方法，连接plc ua服务即可
-                return connect();
-            }
+            return uaClientPOJO.isSubscribe() ? listen() : connect();
+//            if (uaClientPOJO.isSubscribe()){
+//                //如果是要连接并且需要订阅监听节点，选择订阅方法，防止重复连接。
+//                return listen();
+//            }else{
+//                //如果是连接但是不订阅监听节点，选择connect方法，连接plc ua服务即可
+//                return connect();
+//            }
         }
         if (OpcUaUtil.latch != null){
             OpcUaUtil.latch.countDown();

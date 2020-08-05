@@ -21,21 +21,26 @@ shdq.uaclient-3.0.jar [下载](https://pan.baidu.com/s/1ei_-Tc9pFL-WF9CSjDGS-A)
 shdq.uaclient-3.1.jar [下载](https://pan.baidu.com/s/1HKsXEX57GdwbmtUyZWGbWQ)
 提取码: hsia
 
-*无相关依赖，包中使用的依赖需要自己导入*
+*无相关依赖，包中使用的依赖需要自己导入*  
 shdq.uaclient-3.2.jar [下载](https://pan.baidu.com/s/1Up0F5L-Y1o_KiT3O4rXx7A)
 提取码: gzsu
 
-*解决在项目中依赖此项目，打包后YamlConverter找不到系统路径的问题
+*解决在项目中依赖此项目，打包后YamlConverter找不到系统路径的问题*  
 shdq.uaclient-3.3.jar [下载](https://pan.baidu.com/s/14qCxaukFe5lFPOZE1OR-QA)
 提取码：ifwk
 
-*解决旧版本中如果isConnect设为false时项目（spring，spring boot）启动时会一直卡在OpcUaConfiguration初始化方法的
+*解决旧版本中如果isConnect设为false时项目（spring，spring boot）启动时会一直卡在OpcUaConfiguration初始化方法的*
 ```Java
 OpcUaUtil.latch.await();
 ```
-这一步;解决客户端连接订阅节点时重复连接订阅的问题
+*这一步上，解决客户端连接订阅节点时重复连接订阅的问题*  
 shdq.uaclient-3.4.jar [下载](https://pan.baidu.com/s/1E-FZD3AsltKCiBQ6WuXiag)
 提取码：byrn
+
+*解决在项目启动的时候如果连接不成功会一致循环连接，导致项目启动时一直卡在连接opcua服务这环节上，后续的其它应用组件就无法加载，直到连接成功。*  
+*新增两个系统事件监听类SpringbootOnReady和SpringOnReady，分别在springboot应用和spring应用上注册为bean使用。*  
+shdq.uaclient-4.0.jar [下载](https://pan.baidu.com/s/1oaWzn4CDesiraNTjQnTbDw)
+提取码：m2xq
 
 ```java
 <dependency>
@@ -220,7 +225,7 @@ maven项目：
 
 * spring、spring boot项目
   
-> 1.如果要使用配置入口类1，不需要额外配置，应为该类已经使用@Configuration注解配置了。  
+> 1.如果要使用配置入口类1，不需要额外配置,因为该类已经使用@Configuration注解配置了。  
 > 2.如果使用配置入口类2，需要额外把此类在spring容器中注册为一个bean。  
 > 3.编写opcua.yml配置文件，配置监听器和自己定制的节点解析器。  
 

@@ -1,5 +1,6 @@
 package com.opc.uaclient;
 
+import com.opc.uaclient.opcua.appcontext.SpringbootOnReady;
 import com.opc.uaclient.opcua.core.OpcUaConfiguration2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,6 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author shdq-fjy
+ */
 @SpringBootApplication
 @RestController
 public class UaclientApplication {
@@ -24,8 +28,13 @@ public class UaclientApplication {
      * 使用配置入口类2的配置方式
      * @return
      */
-//    @Bean
+    @Bean
     public OpcUaConfiguration2 opcUaConfiguration2(){
         return new OpcUaConfiguration2();
+    }
+
+    @Bean
+    public SpringbootOnReady springbootOnReady(OpcUaConfiguration2 opcUaConfiguration2){
+        return new SpringbootOnReady(opcUaConfiguration2);
     }
 }
