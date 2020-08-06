@@ -3,7 +3,6 @@ package com.opc.uaclient.listener;
 import com.opc.uaclient.opcua.util.OpcUaUtil;
 import com.prosysopc.ua.client.MonitoredDataItem;
 import com.prosysopc.ua.client.MonitoredDataItemListener;
-import lombok.extern.log4j.Log4j;
 import org.opcfoundation.ua.builtintypes.DataValue;
 
 /**
@@ -13,7 +12,7 @@ public class TaskTriggerListener implements MonitoredDataItemListener {
 
     @Override
     public void onDataChange(MonitoredDataItem monitoredDataItem, DataValue dataValue, DataValue dataValue1) {
-        if(!OpcUaUtil.isNewNodeValueValid("1",monitoredDataItem.getNodeId(),dataValue,dataValue1)){
+        if(OpcUaUtil.isNewNodeValueValid("1", monitoredDataItem.getNodeId(), dataValue, dataValue1)){
             return;
         }
     }

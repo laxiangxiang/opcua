@@ -7,40 +7,45 @@
 
 ## 2 打包后的jar文件下载
 
-shdq.uaclient-1.0.jar [下载](https://pan.baidu.com/s/1NXEpyI7QvAz6XA8mVX7KGA)
-提取码: n92u
+shdq.uaclient-1.0.jar [下载](https://pan.baidu.com/s/1NXEpyI7QvAz6XA8mVX7KGA)  
+提取码: n92u  
 
-shdq.uaclient-2.0.jar [下载](https://pan.baidu.com/s/11bJWqoTDUiiwfYuqdigeQQ)
-提取码: 7p4u
+shdq.uaclient-2.0.jar [下载](https://pan.baidu.com/s/11bJWqoTDUiiwfYuqdigeQQ)  
+提取码: 7p4u  
 
 *增加连接线程池资源释放功能*  
-shdq.uaclient-3.0.jar [下载](https://pan.baidu.com/s/1ei_-Tc9pFL-WF9CSjDGS-A)
-提取码: 6ntx
+shdq.uaclient-3.0.jar [下载](https://pan.baidu.com/s/1ei_-Tc9pFL-WF9CSjDGS-A)  
+提取码: 6ntx  
 
 *移除spring retry*  
-shdq.uaclient-3.1.jar [下载](https://pan.baidu.com/s/1HKsXEX57GdwbmtUyZWGbWQ)
-提取码: hsia
+shdq.uaclient-3.1.jar [下载](https://pan.baidu.com/s/1HKsXEX57GdwbmtUyZWGbWQ)  
+提取码: hsia  
 
 *无相关依赖，包中使用的依赖需要自己导入*  
-shdq.uaclient-3.2.jar [下载](https://pan.baidu.com/s/1Up0F5L-Y1o_KiT3O4rXx7A)
-提取码: gzsu
+shdq.uaclient-3.2.jar [下载](https://pan.baidu.com/s/1Up0F5L-Y1o_KiT3O4rXx7A)  
+提取码: gzsu  
 
 *解决在项目中依赖此项目，打包后YamlConverter找不到系统路径的问题*  
-shdq.uaclient-3.3.jar [下载](https://pan.baidu.com/s/14qCxaukFe5lFPOZE1OR-QA)
-提取码：ifwk
+shdq.uaclient-3.3.jar [下载](https://pan.baidu.com/s/14qCxaukFe5lFPOZE1OR-QA)  
+提取码：ifwk  
 
 *解决旧版本中如果isConnect设为false时项目（spring，spring boot）启动时会一直卡在OpcUaConfiguration初始化方法的*
 ```Java
 OpcUaUtil.latch.await();
 ```
 *这一步上，解决客户端连接订阅节点时重复连接订阅的问题*  
-shdq.uaclient-3.4.jar [下载](https://pan.baidu.com/s/1E-FZD3AsltKCiBQ6WuXiag)
-提取码：byrn
+shdq.uaclient-3.4.jar [下载](https://pan.baidu.com/s/1E-FZD3AsltKCiBQ6WuXiag)  
+提取码：byrn  
 
 *解决在项目启动的时候如果连接不成功会一致循环连接，导致项目启动时一直卡在连接opcua服务这环节上，后续的其它应用组件就无法加载，直到连接成功。*  
 *新增两个系统事件监听类SpringbootOnReady和SpringOnReady，分别在springboot应用和spring应用上注册为bean使用。*  
-shdq.uaclient-4.0.jar [下载](https://pan.baidu.com/s/1oaWzn4CDesiraNTjQnTbDw)
-提取码：m2xq
+shdq.uaclient-4.0.jar [下载](https://pan.baidu.com/s/1oaWzn4CDesiraNTjQnTbDw)  
+提取码：m2xq  
+
+*替换上一版本的方案，不采用系统事件监听，采用多线程方式，在配置的OpcuaConfigration类中，采用创建线程方式连接ua 服务，在这个线程中再使用多线程连接每个ua服务。*
+*避免系统在业务层上使用系统事件的时候产生的冲突（多个监听类监听同一个系统事件按照bean创建的先后顺序一次调用onApplicationEvent方法）*
+shdq.uaclient-4.1.jar [下载](https://pan.baidu.com/s/1Aee3bTjRlNraYlHmNoq0pQ)  
+提取码：3mz3  
 
 ```java
 <dependency>

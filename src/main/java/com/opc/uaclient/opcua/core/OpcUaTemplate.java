@@ -42,6 +42,7 @@ public class OpcUaTemplate {
 
     /**
      * 在构造器中创建客户端实例
+     *
      * @param opcUaProperties
      */
     public OpcUaTemplate(OpcUaProperties opcUaProperties, RetryTemplate retryTemplate) {
@@ -56,31 +57,39 @@ public class OpcUaTemplate {
     /**
      * 客户端连接plc
      */
-    public void getConnection(Subscriber subscriber){
+    public void getConnection(Subscriber subscriber) {
         List<UaClientPOJO> uaClientPOJOS = relation.getUaClientPOJOS();
 //        List<UaClientPOJO> uaClientPOJOList = uaClientPOJOS.stream().filter(uaClientPOJO -> uaClientPOJO.isConnect()).collect(Collectors.toList());
-        if (uaClientPOJOS.size() > 0){
+        if (uaClientPOJOS.size() > 0) {
+            OpcUaUtil.settings(uaClientPOJOS.size());
+            //不管是使用线程池还是手动创建线程方式都可以
             ExecutorService executorService = OpcUaUtil.createThreadPool(uaClientPOJOS.size());
             uaClientPOJOS.forEach(uaClientPOJO -> executorService.execute(new Connector(uaClientPOJO,subscriber)));
+//            SecurityManager s = System.getSecurityManager();
+//            ThreadGroup group = (s != null) ? s.getThreadGroup() : Thread.currentThread().getThreadGroup();
+//            uaClientPOJOS.forEach(uaClientPOJO -> {
+//                new Thread(group,new Connector(uaClientPOJO,subscriber),"pool-"+ OpcUaUtil.THREAD_NO.getAndIncrement()+"-thread").start();
+//            });
         }
     }
 
     /**
      * 连接OPCUA并执行相应的功能
+     *
      * @param uaClientPOJO
      * @param <T>
      * @return
      * @throws OpcUaClientException
      */
-    private <T> T execute(UaClientPOJO uaClientPOJO, Supplier<T> supplier)  {
-        if (!uaClientPOJO.getUaClient().isConnected()){
+    private <T> T execute(UaClientPOJO uaClientPOJO, Supplier<T> supplier) {
+        if (!uaClientPOJO.getUaClient().isConnected()) {
             new Connector(uaClientPOJO).connect();
         }
         return supplier.get();
     }
 
-    private <T> T execute(Connector connector, Supplier<T> supplier)  {
-        if (!connector.isConnected()){
+    private <T> T execute(Connector connector, Supplier<T> supplier) {
+        if (!connector.isConnected()) {
             connector.connect();
         }
         return supplier.get();
@@ -88,6 +97,7 @@ public class OpcUaTemplate {
 
     /**
      * 根据节点ID和监听为相应的节点订阅
+     *
      * @param connector
      * @param id
      * @param listener
@@ -100,17 +110,19 @@ public class OpcUaTemplate {
 
     /**
      * 在客户端连接后可以调用此方法动态添加监听器
+     *
      * @param uaClient
      * @param id
      * @param listener
      * @return
      */
-    public boolean subscribe(UaClient uaClient,NodeId id,MonitoredDataItemListener listener){
+    public boolean subscribe(UaClient uaClient, NodeId id, MonitoredDataItemListener listener) {
         return doSubscribeNodeValue(uaClient, id, listener);
     }
 
     /**
      * 把订阅节点和监听器设置到客户端对象中
+     *
      * @param uaClient
      * @param id
      * @param listener
@@ -127,24 +139,25 @@ public class OpcUaTemplate {
             uaClient.addSubscription(subscription);
             return true;
         } catch (ServiceException | StatusException e) {
-            log.error("Error add subscribed node {} to listener {}",id ,listener.getClass().getSimpleName());
+            log.error("Error add subscribed node {} to listener {}", id, listener.getClass().getSimpleName());
             return false;
         }
     }
 
-    public void write(int plcNo,String ns,String nodeName,Object value){
-        for (UaClientPOJO uaClientPOJO : relation.getUaClientPOJOS()){
-            if (uaClientPOJO.getPlcNo() == plcNo){
-                if (ns == null){
+    public void write(int plcNo, String ns, String nodeName, Object value) {
+        for (UaClientPOJO uaClientPOJO : relation.getUaClientPOJOS()) {
+            if (uaClientPOJO.getPlcNo() == plcNo) {
+                if (ns == null) {
                     ns = String.valueOf(uaClientPOJO.getNs());
                 }
-                writeNodeValue(uaClientPOJO,new NodeId(Integer.parseInt(ns),nodeName),value);
+                writeNodeValue(uaClientPOJO, new NodeId(Integer.parseInt(ns), nodeName), value);
             }
         }
     }
 
     /**
      * 根据UaClient将值写入到指定的节点，写入成功为返回true，否则为false
+     *
      * @param uaClientPOJO
      * @param id
      * @param object
@@ -157,6 +170,7 @@ public class OpcUaTemplate {
 
     /**
      * 根据UaClient将值写入到指定的节点，写入成功为返回true，否则为false
+     *
      * @param uaClientPOJO
      * @param nodeId
      * @param value
@@ -170,7 +184,7 @@ public class OpcUaTemplate {
             UaNode node = uaClient.getAddressSpace().getNode(nodeId);
             UaDataType dataType = null;
 //            if (attributeId.equals(Attributes.Value) && (node instanceof UaVariable)) {
-                if (node instanceof UaVariable) {
+            if (node instanceof UaVariable) {
                 UaVariable v = (UaVariable) node;
                 if (v.getDataType() == null) {
                     v.setDataType(uaClient.getAddressSpace().getType(v.getDataTypeId()));
@@ -195,37 +209,40 @@ public class OpcUaTemplate {
             Object convertedValue = dataType != null ? uaClient.getAddressSpace().getDataTypeConverter().parseVariant(value.toString(), dataType) : value;
             return uaClient.writeAttribute(nodeId, attributeId, convertedValue);
         } catch (AddressSpaceException | ServiceException | StatusException e) {
-            log.error("Error writing node value: {}",e.getMessage());
+            log.error("Error writing node value: {}", e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
-    public Object read(int plcNo,String ns,String nodeName){
-        for (UaClientPOJO uaClientPOJO : relation.getUaClientPOJOS()){
-            if (uaClientPOJO.getPlcNo() == plcNo){
-                if (ns == null){
+    public Object read(int plcNo, String ns, String nodeName) {
+        for (UaClientPOJO uaClientPOJO : relation.getUaClientPOJOS()) {
+            if (uaClientPOJO.getPlcNo() == plcNo) {
+                if (ns == null) {
                     ns = String.valueOf(uaClientPOJO.getNs());
                 }
-                Variant variant = readNodeVariant(uaClientPOJO,new NodeId(Integer.parseInt(ns),nodeName));
+                Variant variant = readNodeVariant(uaClientPOJO, new NodeId(Integer.parseInt(ns), nodeName));
                 return String.valueOf(variant.getValue());
             }
         }
         return "null";
     }
+
     /**
      * 根据UaClient和节点读取节点值
+     *
      * @param id
      * @param uaClientPOJO
      * @return
      * @throws OpcUaClientException
      */
     public Variant readNodeVariant(UaClientPOJO uaClientPOJO, NodeId id) {
-        return execute(uaClientPOJO, () -> doReadNodeValue(uaClientPOJO ,id));
+        return execute(uaClientPOJO, () -> doReadNodeValue(uaClientPOJO, id));
     }
 
     /**
      * 根据UaClient和节点读取节点值
+     *
      * @param uaClientPOJO
      * @param id
      * @return
@@ -237,7 +254,7 @@ public class OpcUaTemplate {
             DataValue dataValue = uaClient.readValue(id);
             return dataValue.getValue();
         } catch (ServiceException | StatusException e) {
-            log.error("Error reading " + id + " node value: "+e.getMessage());
+            log.error("Error reading " + id + " node value: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -254,18 +271,18 @@ public class OpcUaTemplate {
     /**
      * bean销毁时主动调用，主动断开所有连接
      */
-    protected void disconnect(){
+    protected void disconnect() {
         closeAllConnection();
     }
 
-    private void closeAllConnection(){
+    private void closeAllConnection() {
         log.info("正在关闭所有连接。。。。");
         List<UaClientPOJO> uaClientPOJOS = Relation.getInstance().getUaClientPOJOS();
         uaClientPOJOS.stream()
                 .filter(UaClientPOJO::isConnect)
                 .forEach(uaClientPOJO -> {
                     uaClientPOJO.getUaClient().disconnect();
-                    log.info("{} 连接已关闭。",uaClientPOJO.getUaClient().getUri());
+                    log.info("{} 连接已关闭。", uaClientPOJO.getUaClient().getUri());
                 });
     }
 }

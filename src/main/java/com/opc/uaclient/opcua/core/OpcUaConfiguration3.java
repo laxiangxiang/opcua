@@ -5,6 +5,7 @@ import com.opc.uaclient.opcua.pojo.Relation;
 import com.opc.uaclient.opcua.util.OpcUaUtil;
 import com.opc.uaclient.opcua.util.YamlConverter;
 import lombok.Getter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
@@ -22,7 +23,7 @@ import java.util.Map;
  */
 @Slf4j
 @Getter
-public class OpcUaConfiguration2 {
+public class OpcUaConfiguration3 {
 
     private Relation relation = Relation.getInstance();
 
@@ -49,13 +50,7 @@ public class OpcUaConfiguration2 {
             log.error(e.getMessage());
             return;
         }
-    }
-
-    public void startConn() throws InterruptedException {
-        opcUaTemplate.getConnection(subscriber);
-        //等待连接上所有plc后释放线程池资源
-        OpcUaUtil.latch.await();
-        OpcUaUtil.release();
+        new Thread(new ThreadGroup("connUAServer"), this::startConn).start();
     }
 
     @PreDestroy
@@ -63,10 +58,17 @@ public class OpcUaConfiguration2 {
         opcUaTemplate.disconnect();
     }
 
+    @SneakyThrows
+    public void startConn() {
+        opcUaTemplate.getConnection(subscriber);
+        //等待连接上所有plc后释放线程池资源
+        OpcUaUtil.latch.await();
+        OpcUaUtil.release();
+    }
+
     /**
      * 读取配置文件并且转换为opcUaProperties
      * 配置文件建议放在src目录下（resources下）
-     * @return
      */
     public OpcUaProperties convertYAML2Properties() throws Exception{
         OpcUaProperties properties =  YamlConverter.getInstance().readAndConvert("opcua.yml",OpcUaProperties.class);
