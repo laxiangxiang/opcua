@@ -28,6 +28,12 @@ public final class OpcUaUtil {
      */
     public static boolean  isNewNodeValueValid(String plcIndex, NodeId id, DataValue oldDataValue, DataValue newDataValue){
         String nodeId = plcIndex + "." + id.toString();
+        String statusCode = newDataValue.getStatusCode().getName();
+        if ("BAD".equals(statusCode)){
+            log.error("Check whether the PLC is connected to the network,because the dataValue statusCode is 'BAD (0x80000000)' from opc UA server.");
+            return false;
+        }
+        log.debug("current dataValue statusCode is {}.",statusCode);
         if (null == oldDataValue) {
             log.info("The subscription for {} is initialized.", nodeId);
             LAST_NODE_VALUE_MAP.put(nodeId, newDataValue.getValue().getValue());
@@ -57,7 +63,6 @@ public final class OpcUaUtil {
             if (newVariant.getValue().equals(oldVariant.getValue())
                 || (LAST_NODE_VALUE_MAP.get(nodeId) != null
                 && LAST_NODE_VALUE_MAP.get(nodeId).equals(newVariant.getValue()))) {
-
                 log.debug("--->>" + nodeId + " from " + oldVariant + " to " + newVariant + "<<---");
                 log.error("data change error: listener YOU DU!!!");
                 return true;

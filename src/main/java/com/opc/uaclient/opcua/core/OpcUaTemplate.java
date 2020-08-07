@@ -222,10 +222,10 @@ public class OpcUaTemplate {
                     ns = String.valueOf(uaClientPOJO.getNs());
                 }
                 Variant variant = readNodeVariant(uaClientPOJO, new NodeId(Integer.parseInt(ns), nodeName));
-                return String.valueOf(variant.getValue());
+                return variant == null ? variant : variant.getValue();
             }
         }
-        return "null";
+        return null;
     }
 
     /**

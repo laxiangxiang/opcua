@@ -47,6 +47,10 @@ shdq.uaclient-4.0.jar [下载](https://pan.baidu.com/s/1oaWzn4CDesiraNTjQnTbDw)
 shdq.uaclient-4.1.jar [下载](https://pan.baidu.com/s/1Aee3bTjRlNraYlHmNoq0pQ)  
 提取码：3mz3  
 
+*添加一些日志，判断节点的状态*  
+shdq.uaclient-4.2.jar [下载](https://pan.baidu.com/s/1Mar16vSGlzZkTqyrrOK2Ug)  
+提取码：7d4a  
+
 ```java
 <dependency>
   <groupId>commons-lang</groupId>
