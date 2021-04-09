@@ -51,14 +51,15 @@ shdq.uaclient-4.1.jar [下载](https://pan.baidu.com/s/1Aee3bTjRlNraYlHmNoq0pQ)
 shdq.uaclient-4.2.jar [下载](https://pan.baidu.com/s/1Mar16vSGlzZkTqyrrOK2Ug)  
 提取码：7d4a  
 
-*mvn install:install-file -DgroupId=com.fjy -DartifactId=uaclient-spring-boot-starter -Dversion=5.0 -Dpackaging=jar -Dfile=uaclient-spring-boot-starter-5.0.jar*
-*增加starter功能，导入包即会自动注入配置类*
-uaclient-spring-boot-starter-5.0.jar [下载](https://pan.baidu.com/s/10DAcgBNwlRmxOGYcL_2YwA)
-提取码：kv3i  
+*mvn install:install-file -DgroupId=com.fjy -DartifactId=uaclient-spring-boot-starter -Dversion=5.0 -Dpackaging=jar -Dfile=uaclient-spring-boot-starter-5.0.jar*  
 
-*新增@EnableOpcUaConfig注解，使用该注解即可自动注入配置*
-uaclient-spring-boot-starter-5.1.jar [下载](https://pan.baidu.com/s/1ywTYajnUip_raX2L-X9zLQ)
-提取码：mhe9
+*增加starter功能，导入包即会自动注入配置类*  
+uaclient-spring-boot-starter-5.0.jar [下载](https://pan.baidu.com/s/10DAcgBNwlRmxOGYcL_2YwA)  
+提取码：kv3i    
+
+*新增@EnableOpcUaConfig注解，使用该注解即可自动注入配置*  
+uaclient-spring-boot-starter-5.1.jar [下载](https://pan.baidu.com/s/1ywTYajnUip_raX2L-X9zLQ)  
+提取码：mhe9  
 
 ```java
 <dependency>
